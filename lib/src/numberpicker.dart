@@ -207,10 +207,16 @@ class _NumberPickerState extends State<NumberPicker> {
 
     final child = isExtra
         ? SizedBox.shrink()
-        : Text(
+        : InkWell( onTap: () {
+          _scrollController.animateTo(value * itemExtent, duration: Duration(milliseconds: 300), curve: Curves.easeOutCubic);
+          if (widget.haptics) {
+            HapticFeedback.selectionClick();
+          }
+          widget.onChanged(value);
+        }, child: Text(
             _getDisplayedValue(value),
             style: itemStyle,
-          );
+          ));
 
     return Container(
       width: widget.itemWidth,
